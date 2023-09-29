@@ -2,23 +2,34 @@
 package obligatorio.pkg1.vareika.golpe;
 
 import java.util.*;
+
+import obligatorio.pkg1.vareika.golpe.partida.Celda;
 import obligatorio.pkg1.vareika.golpe.partida.Partida;
+import obligatorio.pkg1.vareika.golpe.partida.Tablero;
 
 public class Main {
     static Scanner in = new Scanner(System.in);
-    
+
     public static void main(String[] args) {
-        System.out.println("Desea jugar?");
-        String respuesta = in.nextLine();
-        if (respuesta.equals("Si")){
-            iniciarJuego();
+//        System.out.println("Desea jugar?");
+//        String respuesta = in.nextLine();
+//        if (respuesta.equals("Si")){
+//            iniciarJuego();
+//        }
+//
+//        boolean flag = true;
+//        while (flag) {
+//            pedirMovimiento();
+//        }
+        Tablero tablero = new Tablero(5, 6);
+        for (int i = 0; i < tablero.getCeldas().length; i++) {
+            for (int j = 0; j < tablero.getCeldas()[0].length; j++) {
+                tablero.getCeldas()[i][j] = new Celda();
+            }
         }
-        
-        boolean flag = true;
-        while (flag) {
-            pedirMovimiento();
-        }
-        
+        PrettyPrinter.printUnTablero(tablero);
+
+        System.out.printf("\\033[0;31m" + "This is red" + "\\033[0m");
     }
     
     public static void iniciarJuego() {

@@ -9,5 +9,21 @@ package obligatorio.pkg1.vareika.golpe.partida;
  * @author guillermogolpe
  */
 public class Tablero {
-    
+    private Celda[][] celdas;
+
+    public Tablero(int n, int m) {
+        this.setCeldas(new Celda[m][n]);
+    }
+
+    public Celda[][] getCeldas() {
+        return celdas;
+    }
+
+    public void setCeldas(Celda[][] celdas) {
+        this.celdas = celdas;
+    }
+
+    public int[] getDimensiones() {
+        return new int[]{this.getCeldas().length, this.getCeldas()[0].length};
+    }
 }
