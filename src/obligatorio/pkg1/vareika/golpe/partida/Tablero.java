@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package obligatorio.pkg1.vareika.golpe.partida;
-
+ 
 /**
  *
  * @author guillermogolpe

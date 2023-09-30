@@ -13,7 +13,7 @@ public class PrettyPrinter {
     private static final String AZUL = "\\u001B[31m";
     private static final String RESET = "\\u001B[31m";
 
-
+ 
     public static void printUnTablero(Tablero tablero) {
         final Celda[][] celdas = tablero.getCeldas();
         System.out.println(getFilasNumero(celdas.length));

@@ -9,7 +9,7 @@ import obligatorio.pkg1.vareika.golpe.partida.Tablero;
 
 public class Main {
     static Scanner in = new Scanner(System.in);
-
+ 
     public static void main(String[] args) {
 //        System.out.println("Desea jugar?");
 //        String respuesta = in.nextLine();
