@@ -29,7 +29,6 @@ public class Main {
         }
         PrettyPrinter.printUnTablero(tablero);
 
-        System.out.printf("\\033[0;31m" + "This is red" + "\\033[0m");
     }
     
     public static void iniciarJuego() {

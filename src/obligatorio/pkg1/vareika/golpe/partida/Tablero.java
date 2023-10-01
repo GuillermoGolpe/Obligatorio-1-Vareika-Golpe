@@ -12,7 +12,7 @@ public class Tablero {
     private Celda[][] celdas;
 
     public Tablero(int n, int m) {
-        this.setCeldas(new Celda[m][n]);
+        this.setCeldas(new Celda[n][m]);
     }
 
     public Celda[][] getCeldas() {

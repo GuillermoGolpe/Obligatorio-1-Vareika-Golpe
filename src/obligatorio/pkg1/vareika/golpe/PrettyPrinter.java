@@ -9,17 +9,19 @@ public class PrettyPrinter {
     private static final char VERTICAL_BORDER = '|';
     private static final String HORIZONTAL_PADDING = " ";
     private static final int VERTICAL_PADDING = 1;
-    private static final String ROJO = "\\u001B[31m";
-    private static final String AZUL = "\\u001B[31m";
-    private static final String RESET = "\\u001B[31m";
+    private static final String ROJO = "\u001B[31m";
+    private static final String AZUL = "\u001B[34m";
+    private static final String RESET = "\u001B[0m";
 
  
     public static void printUnTablero(Tablero tablero) {
         final Celda[][] celdas = tablero.getCeldas();
-        System.out.println(getFilasNumero(celdas.length));
-        System.out.println("   " + getHorizontalBorder(celdas.length));
+        System.out.println(getFilasNumero(celdas[0].length));
+        String horizontalBorder = getHorizontalBorder(celdas[0].length);
+        System.out.println("   " + horizontalBorder);
         for (int i = 0; i < celdas.length; i++) {
             System.out.println(getFila(celdas[i], i+1));
+            System.out.println("   " + horizontalBorder);
         }
     }
 
