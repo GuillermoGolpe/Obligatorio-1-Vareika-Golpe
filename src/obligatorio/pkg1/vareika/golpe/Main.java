@@ -27,7 +27,7 @@ public class Main {
                 tablero.getCeldas()[i][j] = new Celda();
             }
         }
-        PrettyPrinter.printUnTablero(tablero);
+        PrettyPrinter.printDosTableros(tablero, tablero);
 
     }
     

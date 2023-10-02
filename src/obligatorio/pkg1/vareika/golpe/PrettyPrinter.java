@@ -25,6 +25,24 @@ public class PrettyPrinter {
         }
     }
 
+    public static void printDosTableros(Tablero tablero1, Tablero tablero2) {
+        final Celda[][] celdas1 = tablero1.getCeldas();
+        final Celda[][] celdas2 = tablero2.getCeldas();
+        String columnas = getFilasNumero(celdas1[0].length) + "      " + getFilasNumero(celdas2[0].length);
+        System.out.println(columnas);
+        String horizontalBorder = getHorizontalBorder(celdas1[0].length);
+        System.out.printf("   %s  ==>    %s%n",
+                horizontalBorder,
+                horizontalBorder);
+        for (int i = 0; i < celdas1.length; i++) {
+            System.out.printf("%s  ==> %s%n",
+                    getFila(celdas1[i], i+1),
+                    getFila(celdas2[i], i+1));
+            System.out.printf("   %s  ==>    %s%n",
+                    horizontalBorder,
+                    horizontalBorder);
+        }
+    }
 
     private static String getFilasNumero(int length) {
         StringBuilder builder = new StringBuilder(256);
