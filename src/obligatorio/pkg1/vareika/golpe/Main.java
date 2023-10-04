@@ -11,23 +11,16 @@ public class Main {
     static Scanner in = new Scanner(System.in);
  
     public static void main(String[] args) {
-//        System.out.println("Desea jugar?");
-//        String respuesta = in.nextLine();
-//        if (respuesta.equals("Si")){
-//            iniciarJuego();
-//        }
-//
-//        boolean flag = true;
-//        while (flag) {
-//            pedirMovimiento();
-//        }
-        Tablero tablero = new Tablero(5, 6);
-        for (int i = 0; i < tablero.getCeldas().length; i++) {
-            for (int j = 0; j < tablero.getCeldas()[0].length; j++) {
-                tablero.getCeldas()[i][j] = new Celda();
-            }
+        System.out.println("Desea jugar?");
+        String respuesta = in.nextLine();
+        if (respuesta.equals("Si")){
+            iniciarJuego();
         }
-        PrettyPrinter.printDosTableros(tablero, tablero);
+
+        boolean flag = true;
+        while (flag) {
+            pedirMovimiento();
+        }
 
     }
     
