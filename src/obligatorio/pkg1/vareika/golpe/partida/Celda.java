@@ -12,9 +12,9 @@ public class Celda {
     private char color;
     private char simbolo;
 
-    public Celda() {
-        this.color = 'A';
-        this.simbolo = '\\';
+    public Celda(char simbolo, char color) {
+        this.simbolo = simbolo;
+        this.color = color;
     }
 
     public char getColor() {

@@ -3,9 +3,7 @@ package obligatorio.pkg1.vareika.golpe;
 
 import java.util.*;
 
-import obligatorio.pkg1.vareika.golpe.partida.Celda;
 import obligatorio.pkg1.vareika.golpe.partida.Partida;
-import obligatorio.pkg1.vareika.golpe.partida.Tablero;
 
 public class Main {
     static Scanner in = new Scanner(System.in);
@@ -14,7 +12,8 @@ public class Main {
         System.out.println("Desea jugar?");
         String respuesta = in.nextLine();
         if (respuesta.equals("Si")){
-            iniciarJuego();
+            Partida partida = iniciarJuego();
+            PrettyPrinter.printUnTablero(partida.getTableros().get(0));
         }
 
         boolean flag = true;
@@ -24,15 +23,16 @@ public class Main {
 
     }
     
-    public static void iniciarJuego() {
+    public static Partida iniciarJuego() {
         System.out.println("Seleccione una opcion de juego");
         String modo = in.nextLine();
         Partida partida = new Partida(modo);
-        
+
         if (modo.equals("c")){
             configPartida(partida);
         }
-       
+
+        return partida;
     }
     
     public static void configPartida(Partida partida) {

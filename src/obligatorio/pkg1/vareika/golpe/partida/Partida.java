@@ -4,8 +4,11 @@
  */
 package obligatorio.pkg1.vareika.golpe.partida;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
- 
+import java.util.Scanner;
+
 /**
  *
  * @author guillermogolpe
@@ -16,9 +19,9 @@ public class Partida {
     private ArrayList<int[]> movimientos;
     
     public Partida(String modo) {
-        this.tableros = new ArrayList<>();
-        this.solucion = new ArrayList<>();
-        this.movimientos = new ArrayList<>();
+        this.setTableros(new ArrayList<>());
+        this.setSolucion(new ArrayList<>());
+        this.setMovimientos(new ArrayList<>());
 
         switch (modo) {
             case "A":
@@ -33,19 +36,72 @@ public class Partida {
     public void setTableros(ArrayList<Tablero> tableros) {
         this.tableros = tableros;
     }
+
+    private Tablero cargarDeTxt(String txt) {
+        File file = new File(txt);
+        Scanner txtScanner = null;
+
+        try {
+            txtScanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        int m = txtScanner.nextInt();
+        int n = txtScanner.nextInt();
+        txtScanner.nextLine();
+
+        Tablero tablero = new Tablero(m, n);
+
+        for (int i = 0; i < m; i++) {
+            String[] fila = txtScanner.nextLine().split(" ");
+            for (int j = 0; j < fila.length; j++) {
+                tablero.setCelda(i, j,
+                        new Celda(fila[j].charAt(0), fila[j].charAt(1)));
+            }
+        }
+
+        int nivel = txtScanner.nextInt();
+
+        for (int i = 0; i < nivel; i++) {
+            txtScanner.nextLine();
+            int f = txtScanner.nextInt();
+            int c = txtScanner.nextInt();
+            this.solucion.add(new int[]{f, c});
+        }
+
+        return tablero;
+    }
     
     // Cargar tablero de datos.txt
-    public void casoA() {
-        
+    private void casoA() {
+        this.tableros.add(cargarDeTxt("datos.txt"));
     }
     
     // Cargar tablero predefinido
-    public void casoB() {
-        
+    private void casoB() {
+        this.tableros.add(cargarDeTxt("predefinido.txt"));
     }
     
     // Generar nuevo tablero valido
     public void casoC(int n, int m, int dif) {
         
     }
+
+    public ArrayList<Tablero> getTableros() {
+        return tableros;
+    }
+
+    public void setSolucion(ArrayList<int[]> solucion) {
+        this.solucion = solucion;
+    }
+
+    public ArrayList<int[]> getMovimientos() {
+        return movimientos;
+    }
+
+    public void setMovimientos(ArrayList<int[]> movimientos) {
+        this.movimientos = movimientos;
+    }
+
 }
