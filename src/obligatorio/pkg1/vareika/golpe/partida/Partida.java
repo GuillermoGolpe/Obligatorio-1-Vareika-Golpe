@@ -37,7 +37,7 @@ public class Partida {
         this.tableros = tableros;
     }
 
-    private Tablero cargarDeTxt(String txt) {
+    private Tablero cargarDeTxt(String txt) { 
         File file = new File(txt);
         Scanner txtScanner = null;
 
@@ -70,7 +70,7 @@ public class Partida {
             this.solucion.add(new int[]{f, c});
         }
 
-        return tablero;
+        return tablero; 
     }
     
     // Cargar tablero de datos.txt
@@ -102,6 +102,12 @@ public class Partida {
 
     public void setMovimientos(ArrayList<int[]> movimientos) {
         this.movimientos = movimientos;
+    }
+    
+    public Tablero aplicarMovimiento(int f, int c) {
+        Tablero nuevoTablero = this.tableros.get(this.tableros.size() - 1);
+        nuevoTablero.realizarMov(f, c);
+        return nuevoTablero;
     }
 
 }

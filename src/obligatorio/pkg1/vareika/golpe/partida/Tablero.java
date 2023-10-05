@@ -13,7 +13,7 @@ public class Tablero {
     private Celda[][] celdas;
 
     public Tablero(int n, int m) {
-        this.setCeldas(new Celda[n][m]);
+        this.celdas = new Celda[n][m];
     }
 
     public Celda[][] getCeldas() {
@@ -43,5 +43,41 @@ public class Tablero {
             }
         }
         return flag;
+    }
+    public void realizarMov(int f, int c){
+        Celda celda = this.celdas[f][c];
+        switch (celda.getSimbolo()) {
+            case '/':
+                for (int i = 0; i<this.celdas.length;i++){
+                    for (int j = 0; j < this.celdas[0].length; j++) {
+                        if(i+j == f+c){
+                            this.celdas[i][j].invertirColor();
+                        }
+                    }
+                }
+                break;
+            case '\\':
+                for (int i = 0; i<this.celdas.length;i++){
+                    for (int j = 0; j < this.celdas[0].length; j++) {
+                        if(i-j == f-c){
+                            this.celdas[i][j].invertirColor();
+                        }
+                    }
+                }
+                break;
+            case '-':
+                for (int i = 0; i< this.celdas[0].length; i++){
+                    this.celdas[f][i].invertirColor();
+                }
+                break;
+            case '|':
+                for (int i = 0; i< this.celdas.length; i++){
+                    this.celdas[i][c].invertirColor();
+                }   
+                break;
+            default:
+                break;
+        }
+        
     }
 }

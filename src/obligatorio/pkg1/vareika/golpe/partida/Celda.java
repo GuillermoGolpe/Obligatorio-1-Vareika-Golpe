@@ -32,4 +32,12 @@ public class Celda {
     public void setSimbolo(char simbolo) {
         this.simbolo = simbolo;
     }
+    
+    public void invertirColor(){
+        if (this.getColor()== 'A'){
+            this.setColor('R');
+        } else{
+            this.setColor('A');
+        }
+    }
 }
