@@ -5,6 +5,8 @@
 package obligatorio.pkg1.vareika.golpe.partida;
 
 
+import java.util.Random;
+
 /**
  *
  * @author guillermogolpe
@@ -37,7 +39,7 @@ public class Tablero {
         boolean flag = true;
         for (int i = 0; i < this.celdas.length && flag; i++) {
             for (int j = 0; j < this.celdas[i].length && flag; j++) {
-                if (this.celdas[0][0].getColor() == this.celdas[i][j].getColor()) {
+                if (i != 0 && j != 0 && this.celdas[0][0].getColor() == this.celdas[i][j].getColor()) {
                     flag = false;
                 }
             }
@@ -79,5 +81,24 @@ public class Tablero {
                 break;
         }
         
+    }
+
+    public void randomizarTablero() {
+        Random random = new Random();
+        char color = '0';
+        int colorNum = random.nextInt(2);
+        switch (colorNum) {
+            case 0:
+               color = 'R';
+               break;
+            case 1:
+                color = 'A';
+                break;
+        }
+        for (int i = 0; i < celdas.length; i++) {
+            for (int j = 0; j < celdas[0].length; j++) {
+                celdas[i][j] = new Celda(random.nextInt(4), color);
+            }
+        }
     }
 }

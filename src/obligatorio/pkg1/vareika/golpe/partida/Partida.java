@@ -7,6 +7,7 @@ package obligatorio.pkg1.vareika.golpe.partida;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -85,7 +86,23 @@ public class Partida {
     
     // Generar nuevo tablero valido
     public void casoC(int n, int m, int dif) {
-        
+        Random random = new Random();
+
+        Tablero tableroInicial = new Tablero(n, m);
+        Tablero tableroAux = new Tablero(n, m);
+        tableroInicial.randomizarTablero();
+        this.tableros.add(tableroInicial);
+        int i = 0;
+        while(i <= dif) {
+            int f = random.nextInt(n);
+            int c = random.nextInt(m);
+            tableroAux = aplicarMovimiento(f, c);
+            if (!tableroAux.resuelto()) {
+                tableroInicial = tableroAux;
+                this.solucion.add(new int[] {f, c});
+                i++;
+            }
+        }
     }
 
     public ArrayList<Tablero> getTableros() {
