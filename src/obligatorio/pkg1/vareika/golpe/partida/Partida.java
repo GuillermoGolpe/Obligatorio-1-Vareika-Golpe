@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author guillermogolpe
+ * @author GuillermoGolpe FedericoVareika
  */
 public class Partida {
     private ArrayList<Tablero> tableros;
