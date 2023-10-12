@@ -11,33 +11,28 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Desea jugar?");
         String respuesta = in.nextLine();
-        while (evaluarInvalido(respuesta)) {
+        while (!respuesta.equalsIgnoreCase("si")
+            && !respuesta.equalsIgnoreCase("no")) {
             System.out.println("Ingresar respuesta valida (si/no)");
+            respuesta = in.nextLine();
         }
+
         if (respuesta.equalsIgnoreCase("si")){
             Partida partida = iniciarJuego();
+
             PrettyPrinter.printUnTablero(partida.getTableros().get(0));
         }
-
-        boolean flag = true;
-        while (flag) {
-            pedirMovimiento();
-        }
-
-    }
-
-    private static boolean evaluarInvalido(String respuesta) {
-        boolean flag = false;
-        if (!respuesta.equalsIgnoreCase("si")
-            || !respuesta.equalsIgnoreCase("no")) {
-            flag = true;
-        }
-        return flag;
     }
 
     public static Partida iniciarJuego() {
         System.out.println("Seleccione una opcion de juego");
         String modo = in.nextLine();
+        while (!modo.equalsIgnoreCase("a")
+            && !modo.equalsIgnoreCase("b")
+            && !modo.equalsIgnoreCase("c")) {
+            System.out.println("Ingresar respuesta valida (a/b/c):");
+            modo = in.nextLine();
+        }
         Partida partida = new Partida(modo);
 
         if (modo.equals("c")){
@@ -48,18 +43,35 @@ public class Main {
     }
     
     public static void configPartida(Partida partida) {
-        System.out.println("Ingrese, cantidad de filas, cantidad de columnas y dificultad");
+        System.out.println("Ingrese datos");
         boolean flag = true;
         while (flag) {
             try {
+                System.out.println("Filas (1-9):");
                 int m = in.nextInt();
+                in.nextLine();
+
+                System.out.println("Columnas (1-9):");
                 int n = in.nextInt();
+                in.nextLine();
+
+                System.out.println("Dificultad (1-8):");
                 int dif = in.nextInt();
                 in.nextLine();
+
                 partida.casoC(m, n, dif);
-                flag = false;
+
+                if (m >= 1 && m <= 9 &&
+                    n >= 1 && n <= 9 &&
+                    dif >= 1 && dif <= 8) {
+                    flag = false;
+                } else {
+                    System.out.println(
+                            "Los datos deben de pertenecer a los rangos correctos, ingrese nuevamente:");
+                }
             } catch (Exception e) {
-                System.out.println("Datos invalidos, ingrese nuevamente:");
+                in.nextLine();
+                System.out.println("Dato invalido, ingrese nuevamente");
             }
         }
     }
