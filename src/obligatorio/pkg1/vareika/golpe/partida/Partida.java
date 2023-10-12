@@ -7,11 +7,12 @@ package obligatorio.pkg1.vareika.golpe.partida;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
  *
- * @author guillermogolpe
+ * @author GuillermoGolpe FedericoVareika
  */
 public class Partida {
     private ArrayList<Tablero> tableros;
@@ -37,7 +38,7 @@ public class Partida {
         this.tableros = tableros;
     }
 
-    private Tablero cargarDeTxt(String txt) {
+    private Tablero cargarDeTxt(String txt) { 
         File file = new File(txt);
         Scanner txtScanner = null;
 
@@ -70,7 +71,7 @@ public class Partida {
             this.solucion.add(new int[]{f, c});
         }
 
-        return tablero;
+        return tablero; 
     }
     
     // Cargar tablero de datos.txt
@@ -85,7 +86,23 @@ public class Partida {
     
     // Generar nuevo tablero valido
     public void casoC(int n, int m, int dif) {
-        
+        Random random = new Random();
+
+        Tablero tableroInicial = new Tablero(n, m);
+        Tablero tableroAux = new Tablero(n, m);
+        tableroInicial.randomizarTablero();
+        this.tableros.add(tableroInicial);
+        int i = 0;
+        while(i <= dif) {
+            int f = random.nextInt(n);
+            int c = random.nextInt(m);
+            tableroAux = aplicarMovimiento(f, c);
+            if (!tableroAux.resuelto()) {
+                tableroInicial = tableroAux;
+                this.solucion.add(new int[] {f, c});
+                i++;
+            }
+        }
     }
 
     public ArrayList<Tablero> getTableros() {
@@ -102,6 +119,12 @@ public class Partida {
 
     public void setMovimientos(ArrayList<int[]> movimientos) {
         this.movimientos = movimientos;
+    }
+    
+    public Tablero aplicarMovimiento(int f, int c) {
+        Tablero nuevoTablero = this.tableros.get(this.tableros.size() - 1);
+        nuevoTablero.realizarMov(f, c);
+        return nuevoTablero;
     }
 
 }

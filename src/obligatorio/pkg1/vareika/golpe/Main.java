@@ -11,7 +11,10 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Desea jugar?");
         String respuesta = in.nextLine();
-        if (respuesta.equals("Si")){
+        while (evaluarInvalido(respuesta)) {
+            System.out.println("Ingresar respuesta valida (si/no)");
+        }
+        if (respuesta.equalsIgnoreCase("si")){
             Partida partida = iniciarJuego();
             PrettyPrinter.printUnTablero(partida.getTableros().get(0));
         }
@@ -22,7 +25,16 @@ public class Main {
         }
 
     }
-    
+
+    private static boolean evaluarInvalido(String respuesta) {
+        boolean flag = false;
+        if (!respuesta.equalsIgnoreCase("si")
+            || !respuesta.equalsIgnoreCase("no")) {
+            flag = true;
+        }
+        return flag;
+    }
+
     public static Partida iniciarJuego() {
         System.out.println("Seleccione una opcion de juego");
         String modo = in.nextLine();
