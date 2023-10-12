@@ -10,18 +10,30 @@ public class Main {
  
     public static void main(String[] args) {
         System.out.println("Desea jugar?");
+        boolean jugarFlag = recibirRespuesta();
+
+        while (jugarFlag) {
+            Partida partida = iniciarJuego();
+
+            boolean continuarJugando = true;
+            while (continuarJugando) {
+                continuarJugando = realizarMovimiento(partida);
+            }
+
+
+            System.out.println("Desea volver a jugar?");
+            jugarFlag = recibirRespuesta();
+        }
+    }
+
+    public static boolean recibirRespuesta() {
         String respuesta = in.nextLine();
         while (!respuesta.equalsIgnoreCase("si")
-            && !respuesta.equalsIgnoreCase("no")) {
+                && !respuesta.equalsIgnoreCase("no")) {
             System.out.println("Ingresar respuesta valida (si/no)");
             respuesta = in.nextLine();
         }
-
-        if (respuesta.equalsIgnoreCase("si")){
-            Partida partida = iniciarJuego();
-
-            PrettyPrinter.printUnTablero(partida.getTableros().get(0));
-        }
+        return respuesta.equalsIgnoreCase("si");
     }
 
     public static Partida iniciarJuego() {
@@ -75,9 +87,37 @@ public class Main {
             }
         }
     }
-    
-    public static void pedirMovimiento() {
-        
+
+    //TODO fijarse si se resolvio el tablero
+    //TODO cleanup
+    public static boolean realizarMovimiento(Partida partida) {
+        System.out.println("Ingrese fila de movimiento o X/H/S:");
+        String movimiento = in.nextLine();
+        boolean flagMovimiento = false;
+        while (!movimiento.equalsIgnoreCase("x") &&
+                !movimiento.equalsIgnoreCase("h") &&
+                !movimiento.equalsIgnoreCase("s") &&
+                !flagMovimiento) {
+            try {
+                int fila = Integer.parseInt(movimiento);
+                System.out.println("Columna:");
+                String columnaStr = in.nextLine();
+                int columna = Integer.parseInt(movimiento);
+                partida.realizarMovimiento(fila, columna);
+
+                flagMovimiento = true;
+            } catch (Exception e) {
+                System.out.println("Ingresar movimiento valido");
+                movimiento = in.nextLine();
+            }
+        }
+
+        boolean continuarJugando = true;
+        if (!flagMovimiento) {
+           continuarJugando = partida.realizarMovimiento(movimiento);
+        }
+
+        return continuarJugando;
     }
     
 }

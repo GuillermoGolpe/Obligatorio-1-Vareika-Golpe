@@ -127,4 +127,18 @@ public class Partida {
         return nuevoTablero;
     }
 
+    public void realizarMovimiento(int f, int c) {
+        Tablero tableroNuevo = aplicarMovimiento(f, c);
+        this.tableros.add(tableroNuevo);
+        this.movimientos.add(new int[]{f, c});
+    }
+
+    public boolean realizarMovimiento(String mov) {
+        boolean continuarJugando = true;
+        if (mov.equalsIgnoreCase("x")) {
+            continuarJugando = false;
+        }
+        return continuarJugando;
+    }
+
 }
