@@ -10,9 +10,14 @@ package obligatorio.pkg1.vareika.golpe.partida;
  */
 
 
-public class Celda {
+public class Celda implements Cloneable {
     private char color;
     private char simbolo;
+
+    public Celda(Celda otra) {
+        this.simbolo = otra.getSimbolo();
+        this.color = otra.getColor();
+    }
 
     public Celda(char simbolo, char color) {
         this.simbolo = simbolo;
@@ -35,6 +40,11 @@ public class Celda {
                 break;
         }
         this.color = color;
+    }
+
+    @Override
+    protected Object clone() {
+        return (Object) new Celda(this);
     }
 
     public char getColor() {

@@ -4,6 +4,7 @@ package obligatorio.pkg1.vareika.golpe;
 import java.util.*;
 
 import obligatorio.pkg1.vareika.golpe.partida.Partida;
+import obligatorio.pkg1.vareika.golpe.partida.Tablero;
 
 public class Main {
     static Scanner in = new Scanner(System.in);
@@ -88,11 +89,12 @@ public class Main {
         }
     }
 
-    //TODO fijarse si se resolvio el tablero
-    //TODO cleanup
+    //TODO fijarse si se resolvio el tablero, fijarse q en s no se vaya para atras sin movimientos
     public static boolean realizarMovimiento(Partida partida) {
+        boolean continuarJugando = true;
         System.out.println("Ingrese fila de movimiento o X/H/S:");
         String movimiento = in.nextLine();
+
         boolean flagMovimiento = false;
         while (!movimiento.equalsIgnoreCase("x") &&
                 !movimiento.equalsIgnoreCase("h") &&
@@ -102,8 +104,13 @@ public class Main {
                 int fila = Integer.parseInt(movimiento);
                 System.out.println("Columna:");
                 String columnaStr = in.nextLine();
-                int columna = Integer.parseInt(movimiento);
-                partida.realizarMovimiento(fila, columna);
+                int columna = Integer.parseInt(columnaStr);
+                continuarJugando = partida.realizarMovimiento(fila, columna);
+
+                int tablerosSize = partida.getTableros().size();
+                PrettyPrinter.printDosTableros(
+                        partida.getTableros().get(tablerosSize - 2),
+                        partida.getTableros().get(tablerosSize - 1));
 
                 flagMovimiento = true;
             } catch (Exception e) {
@@ -112,9 +119,11 @@ public class Main {
             }
         }
 
-        boolean continuarJugando = true;
         if (!flagMovimiento) {
            continuarJugando = partida.realizarMovimiento(movimiento);
+           if (!continuarJugando) {
+               System.out.println("Has finalizado el juego.");
+           }
         }
 
         return continuarJugando;

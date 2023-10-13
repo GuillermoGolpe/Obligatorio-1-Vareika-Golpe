@@ -4,6 +4,8 @@
  */
 package obligatorio.pkg1.vareika.golpe.partida;
 
+import obligatorio.pkg1.vareika.golpe.PrettyPrinter;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -89,20 +91,20 @@ public class Partida {
         Random random = new Random();
 
         Tablero tableroInicial = new Tablero(n, m);
-        Tablero tableroAux = new Tablero(n, m);
+        Tablero tableroAux;
         tableroInicial.randomizarTablero();
-        this.tableros.add(tableroInicial);
         int i = 0;
-        while(i <= dif) {
+        while(i < dif) {
             int f = random.nextInt(n);
             int c = random.nextInt(m);
-            tableroAux = aplicarMovimiento(f, c);
+            tableroAux = aplicarMovimiento(tableroInicial, f, c);
             if (!tableroAux.resuelto()) {
                 tableroInicial = tableroAux;
                 this.solucion.add(new int[] {f, c});
                 i++;
             }
         }
+        this.tableros.add(tableroInicial);
     }
 
     public ArrayList<Tablero> getTableros() {
@@ -120,17 +122,24 @@ public class Partida {
     public void setMovimientos(ArrayList<int[]> movimientos) {
         this.movimientos = movimientos;
     }
-    
-    public Tablero aplicarMovimiento(int f, int c) {
-        Tablero nuevoTablero = this.tableros.get(this.tableros.size() - 1);
+
+    public Tablero aplicarMovimiento(Tablero tablero, int f, int c) {
+        // Usamos deep copy para poder tener registro de todos los tableros anteriores y el actual
+        Tablero nuevoTablero = (Tablero) tablero.clone();
         nuevoTablero.realizarMov(f, c);
         return nuevoTablero;
     }
 
-    public void realizarMovimiento(int f, int c) {
-        Tablero tableroNuevo = aplicarMovimiento(f, c);
+    public boolean realizarMovimiento(int f, int c) {
+        //input para posicion [0][0] = (1, 1)
+        Tablero tableroNuevo = aplicarMovimiento(
+                this.tableros.get(this.tableros.size()-1),
+                f-1, c-1);
+        PrettyPrinter.printUnTablero(tableroNuevo);
         this.tableros.add(tableroNuevo);
         this.movimientos.add(new int[]{f, c});
+        return !this.tableros.get(this.tableros.size()-1).resuelto();
+        // Retorna false de forma que se termine la partida en main
     }
 
     public boolean realizarMovimiento(String mov) {

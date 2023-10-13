@@ -11,11 +11,27 @@ import java.util.Random;
  *
  * @author guillermogolpe
  */
-public class Tablero {
+public class Tablero implements Cloneable {
     private Celda[][] celdas;
 
     public Tablero(int n, int m) {
         this.celdas = new Celda[n][m];
+    }
+
+    public Tablero(Celda[][] celdas) {
+        this.celdas = celdas;
+    }
+
+    @Override
+    protected Object clone() {
+        Celda[][] celdas = new Celda[this.getCeldas().length][this.getCeldas()[0].length];
+        for (int i = 0; i < this.getCeldas().length; i++) {
+            for (int j = 0; j < this.getCeldas()[i].length; j++) {
+                celdas[i][j] = (Celda) this.getCeldas()[i][j].clone();
+            }
+        }
+
+        return (Object) new Tablero(celdas);
     }
 
     public Celda[][] getCeldas() {
@@ -26,7 +42,6 @@ public class Tablero {
         this.celdas = celdas;
     }
 
-    // TODO Preguntar si usar get dentro de una misma clase
     public int[] getDimensiones() {
         return new int[]{this.celdas.length, this.celdas[0].length};
     }
