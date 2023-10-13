@@ -54,7 +54,7 @@ public class Tablero implements Cloneable {
         boolean flag = true;
         for (int i = 0; i < this.celdas.length && flag; i++) {
             for (int j = 0; j < this.celdas[i].length && flag; j++) {
-                if (i != 0 && j != 0 && this.celdas[0][0].getColor() == this.celdas[i][j].getColor()) {
+                if (i != 0 && j != 0 && this.celdas[0][0].getColor() != this.celdas[i][j].getColor()) {
                     flag = false;
                 }
             }
