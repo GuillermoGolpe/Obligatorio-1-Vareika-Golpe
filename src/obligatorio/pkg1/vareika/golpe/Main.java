@@ -15,12 +15,12 @@ public class Main {
 
         while (jugarFlag) {
             Partida partida = iniciarJuego();
+            PrettyPrinter.printUnTablero(partida.getTablero());
 
             boolean continuarJugando = true;
             while (continuarJugando) {
                 continuarJugando = realizarMovimiento(partida);
             }
-
 
             System.out.println("Desea volver a jugar?");
             jugarFlag = recibirRespuesta();
@@ -89,7 +89,7 @@ public class Main {
         }
     }
 
-    //TODO fijarse si se resolvio el tablero, fijarse q en s no se vaya para atras sin movimientos
+    //TODO fijarse q en s no se vaya para atras sin movimientos
     public static boolean realizarMovimiento(Partida partida) {
         boolean continuarJugando = true;
         System.out.println("Ingrese fila de movimiento o X/H/S:");
@@ -99,18 +99,19 @@ public class Main {
         while (!movimiento.equalsIgnoreCase("x") &&
                 !movimiento.equalsIgnoreCase("h") &&
                 !movimiento.equalsIgnoreCase("s") &&
-                !flagMovimiento) {
+                !flagMovimiento && continuarJugando) {
             try {
                 int fila = Integer.parseInt(movimiento);
                 System.out.println("Columna:");
                 String columnaStr = in.nextLine();
                 int columna = Integer.parseInt(columnaStr);
+
+                Tablero tableroPrevio = partida.getTablero();
                 continuarJugando = partida.realizarMovimiento(fila, columna);
 
-                int tablerosSize = partida.getTableros().size();
                 PrettyPrinter.printDosTableros(
-                        partida.getTableros().get(tablerosSize - 2),
-                        partida.getTableros().get(tablerosSize - 1));
+                        tableroPrevio,
+                        partida.getTablero());
 
                 flagMovimiento = true;
             } catch (Exception e) {
@@ -120,10 +121,12 @@ public class Main {
         }
 
         if (!flagMovimiento) {
-           continuarJugando = partida.realizarMovimiento(movimiento);
-           if (!continuarJugando) {
-               System.out.println("Has finalizado el juego.");
-           }
+            continuarJugando = partida.realizarMovimiento(movimiento);
+            if (!continuarJugando) {
+                System.out.println("Has finalizado el juego.");
+            }
+        } else if (!continuarJugando) {
+            System.out.println("Has ganado!");
         }
 
         return continuarJugando;

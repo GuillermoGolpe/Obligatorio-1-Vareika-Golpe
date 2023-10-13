@@ -17,12 +17,11 @@ import java.util.Scanner;
  * @author GuillermoGolpe FedericoVareika
  */
 public class Partida {
-    private ArrayList<Tablero> tableros;
+    private Tablero tablero;
     private ArrayList<int[]> solucion;
     private ArrayList<int[]> movimientos;
     
     public Partida(String modo) {
-        this.setTableros(new ArrayList<>());
         this.setSolucion(new ArrayList<>());
         this.setMovimientos(new ArrayList<>());
 
@@ -34,10 +33,6 @@ public class Partida {
                 casoB();
                 break;
         }
-    }
-    
-    public void setTableros(ArrayList<Tablero> tableros) {
-        this.tableros = tableros;
     }
 
     private Tablero cargarDeTxt(String txt) { 
@@ -78,37 +73,40 @@ public class Partida {
     
     // Cargar tablero de datos.txt
     private void casoA() {
-        this.tableros.add(cargarDeTxt("datos.txt"));
+        this.tablero = cargarDeTxt("datos.txt");
     }
     
     // Cargar tablero predefinido
     private void casoB() {
-        this.tableros.add(cargarDeTxt("predefinido.txt"));
+        this.tablero = cargarDeTxt("predefinido.txt");
     }
     
     // Generar nuevo tablero valido
     public void casoC(int n, int m, int dif) {
         Random random = new Random();
 
-        Tablero tableroInicial = new Tablero(n, m);
+        this.tablero = new Tablero(n, m);
         Tablero tableroAux;
-        tableroInicial.randomizarTablero();
+        this.tablero.randomizarTablero();
         int i = 0;
         while(i < dif) {
             int f = random.nextInt(n);
             int c = random.nextInt(m);
-            tableroAux = aplicarMovimiento(tableroInicial, f, c);
+            tableroAux = aplicarMovimiento(this.tablero, f, c);
             if (!tableroAux.resuelto()) {
-                tableroInicial = tableroAux;
+                this.tablero = tableroAux;
                 this.solucion.add(new int[] {f, c});
                 i++;
             }
         }
-        this.tableros.add(tableroInicial);
     }
 
-    public ArrayList<Tablero> getTableros() {
-        return tableros;
+    public void setTablero(Tablero tablero) {
+        this.tablero = tablero;
+    }
+
+    public Tablero getTablero() {
+        return (Tablero) this.tablero.clone();
     }
 
     public void setSolucion(ArrayList<int[]> solucion) {
@@ -132,22 +130,18 @@ public class Partida {
 
     public boolean realizarMovimiento(int f, int c) {
         //input para posicion [0][0] = (1, 1)
-        Tablero tableroNuevo = aplicarMovimiento(
-                this.tableros.get(this.tableros.size()-1),
-                f-1, c-1);
-        PrettyPrinter.printUnTablero(tableroNuevo);
-        this.tableros.add(tableroNuevo);
-        this.movimientos.add(new int[]{f, c});
-        return !this.tableros.get(this.tableros.size()-1).resuelto();
+        this.tablero.realizarMov(f-1, c-1);
+        return !this.tablero.resuelto();
         // Retorna false de forma que se termine la partida en main
     }
 
     public boolean realizarMovimiento(String mov) {
-        boolean continuarJugando = true;
-        if (mov.equalsIgnoreCase("x")) {
-            continuarJugando = false;
-        }
-        return continuarJugando;
-    }
+        if (mov.equalsIgnoreCase("s")) {
 
+        } else if (mov.equalsIgnoreCase("h")) {
+
+        }
+
+        return !mov.equalsIgnoreCase("x");
+    }
 }
