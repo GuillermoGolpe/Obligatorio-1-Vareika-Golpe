@@ -6,13 +6,16 @@ import java.util.*;
 import obligatorio.pkg1.vareika.golpe.partida.Partida;
 import obligatorio.pkg1.vareika.golpe.partida.Tablero;
 
+/**
+ *
+ * @author GuillermoGolpe FedericoVareika
+ */
 public class Main {
     static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
         System.out.println("Desea jugar?");
         boolean jugarFlag = recibirRespuesta();
-
         while (jugarFlag) {
             Partida partida = iniciarJuego();
             PrettyPrinter.printUnTablero(partida.getTablero());

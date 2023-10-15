@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package obligatorio.pkg1.vareika.golpe.partida;
 
 
@@ -9,7 +5,7 @@ import java.util.Random;
 
 /**
  *
- * @author guillermogolpe
+ * @author GuillermoGolpe FedericoVareika
  */
 public class Tablero implements Cloneable {
     private Celda[][] celdas;
@@ -24,10 +20,10 @@ public class Tablero implements Cloneable {
 
     @Override
     protected Object clone() {
-        Celda[][] celdas = new Celda[this.getCeldas().length][this.getCeldas()[0].length];
-        for (int i = 0; i < this.getCeldas().length; i++) {
-            for (int j = 0; j < this.getCeldas()[i].length; j++) {
-                celdas[i][j] = (Celda) this.getCeldas()[i][j].clone();
+        Celda[][] celdas = new Celda[this.celdas.length][this.celdas[0].length];
+        for (int i = 0; i < this.celdas.length; i++) {
+            for (int j = 0; j < this.celdas[i].length; j++) {
+                celdas[i][j] = (Celda) this.celdas[i][j].clone();
             }
         }
 
@@ -36,14 +32,6 @@ public class Tablero implements Cloneable {
 
     public Celda[][] getCeldas() {
         return celdas;
-    }
-
-    public void setCeldas(Celda[][] celdas) {
-        this.celdas = celdas;
-    }
-
-    public int[] getDimensiones() {
-        return new int[]{this.celdas.length, this.celdas[0].length};
     }
 
     public void setCelda(int m, int n, Celda celda) {

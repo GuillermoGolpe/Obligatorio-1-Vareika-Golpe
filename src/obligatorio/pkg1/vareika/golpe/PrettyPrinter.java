@@ -5,12 +5,15 @@ import obligatorio.pkg1.vareika.golpe.partida.Celda;
 
 import java.util.ArrayList;
 
+/**
+ *
+ * @author GuillermoGolpe FedericoVareika
+ */
 public class PrettyPrinter {
     private static final char BORDER_KNOT = '+';
     private static final char HORIZONTAL_BORDER = '-';
     private static final char VERTICAL_BORDER = '|';
     private static final String HORIZONTAL_PADDING = " ";
-    private static final int VERTICAL_PADDING = 1;
     private static final String ROJO = "\u001B[31m";
     private static final String AZUL = "\u001B[34m";
     private static final String RESET = "\u001B[0m";

@@ -4,10 +4,7 @@
  */
 package obligatorio.pkg1.vareika.golpe.partida;
 
-import obligatorio.pkg1.vareika.golpe.PrettyPrinter;
-
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
@@ -39,7 +36,7 @@ public class Partida {
 
         try {
             txtScanner = new Scanner(file);
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -97,7 +94,7 @@ public class Partida {
         return (Tablero) this.tablero.clone();
     }
 
-    public Tablero aplicarMovimiento(Tablero tablero, int f, int c) {
+    private Tablero aplicarMovimiento(Tablero tablero, int f, int c) {
         // Usamos deep copy para poder tener registro de todos los tableros anteriores y el actual
         Tablero nuevoTablero = (Tablero) tablero.clone();
         nuevoTablero.realizarMov(f, c);
@@ -117,7 +114,7 @@ public class Partida {
         return retrocedido;
     }
 
-    public void retroceder() {
+    private void retroceder() {
         int movSize = this.movimientos.size();
         int[] movimiento = this.movimientos.get(movSize-1);
         this.movimientos.remove(movSize-1);
@@ -132,7 +129,7 @@ public class Partida {
         return solucionGenerada;
     }
 
-    public void quitarPares(ArrayList<int[]> lista) {
+    private void quitarPares(ArrayList<int[]> lista) {
         for (int i = 0; i < lista.size(); i++) {
             for (int j = i + 1; j < lista.size(); j++) {
                 if (Arrays.equals(lista.get(i), lista.get(j))) {
@@ -144,5 +141,4 @@ public class Partida {
             }
         }
     }
-
 }
