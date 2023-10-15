@@ -8,9 +8,7 @@ import obligatorio.pkg1.vareika.golpe.PrettyPrinter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  *
@@ -22,15 +20,15 @@ public class Partida {
     private ArrayList<int[]> movimientos;
     
     public Partida(String modo) {
-        this.setSolucion(new ArrayList<>());
-        this.setMovimientos(new ArrayList<>());
+        this.solucion = new ArrayList<>();
+        this.movimientos = new ArrayList<>();
 
-        switch (modo) {
-            case "A":
-                casoA();
+        switch (modo.toLowerCase()) {
+            case "a":
+                this.tablero = cargarDeTxt("datos.txt");
                 break;
-            case "B":
-                casoB();
+            case "b":
+                this.tablero = cargarDeTxt("predefinido.txt");
                 break;
         }
     }
@@ -70,17 +68,7 @@ public class Partida {
 
         return tablero; 
     }
-    
-    // Cargar tablero de datos.txt
-    private void casoA() {
-        this.tablero = cargarDeTxt("datos.txt");
-    }
-    
-    // Cargar tablero predefinido
-    private void casoB() {
-        this.tablero = cargarDeTxt("predefinido.txt");
-    }
-    
+
     // Generar nuevo tablero valido
     public void casoC(int n, int m, int dif) {
         Random random = new Random();
@@ -95,30 +83,18 @@ public class Partida {
             tableroAux = aplicarMovimiento(this.tablero, f, c);
             if (!tableroAux.resuelto()) {
                 this.tablero = tableroAux;
-                this.solucion.add(new int[] {f, c});
+                this.solucion.add(new int[] {f+1, c+1});
                 i++;
             }
         }
     }
 
-    public void setTablero(Tablero tablero) {
-        this.tablero = tablero;
+    public ArrayList<int[]> getMovimientos() {
+        return this.movimientos;
     }
 
     public Tablero getTablero() {
         return (Tablero) this.tablero.clone();
-    }
-
-    public void setSolucion(ArrayList<int[]> solucion) {
-        this.solucion = solucion;
-    }
-
-    public ArrayList<int[]> getMovimientos() {
-        return movimientos;
-    }
-
-    public void setMovimientos(ArrayList<int[]> movimientos) {
-        this.movimientos = movimientos;
     }
 
     public Tablero aplicarMovimiento(Tablero tablero, int f, int c) {
@@ -130,18 +106,43 @@ public class Partida {
 
     public boolean realizarMovimiento(int f, int c) {
         //input para posicion [0][0] = (1, 1)
-        this.tablero.realizarMov(f-1, c-1);
-        return !this.tablero.resuelto();
-        // Retorna false de forma que se termine la partida en main
-    }
-
-    public boolean realizarMovimiento(String mov) {
-        if (mov.equalsIgnoreCase("s")) {
-
-        } else if (mov.equalsIgnoreCase("h")) {
-
+        boolean retrocedido = false;
+        if (f == -1 && c == -1) {
+            retroceder();
+            retrocedido = true;
+        } else {
+            this.tablero.realizarMov(f - 1, c - 1);
+            this.movimientos.add(new int[]{f, c});
         }
-
-        return !mov.equalsIgnoreCase("x");
+        return retrocedido;
     }
+
+    public void retroceder() {
+        int movSize = this.movimientos.size();
+        int[] movimiento = this.movimientos.get(movSize-1);
+        this.movimientos.remove(movSize-1);
+        this.tablero.realizarMov(movimiento[0] - 1, movimiento[1] - 1);
+    }
+
+    public ArrayList<int[]> generarSolucion() {
+        ArrayList<int[]> solucionGenerada = new ArrayList<>();
+        solucionGenerada.addAll(this.solucion);
+        solucionGenerada.addAll(this.movimientos);
+        quitarPares(solucionGenerada);
+        return solucionGenerada;
+    }
+
+    public void quitarPares(ArrayList<int[]> lista) {
+        for (int i = 0; i < lista.size(); i++) {
+            for (int j = i + 1; j < lista.size(); j++) {
+                if (Arrays.equals(lista.get(i), lista.get(j))) {
+                    lista.remove(lista.get(i));
+                    lista.remove(lista.get(j - 1));
+                    j = lista.size();
+                    i--;
+                }
+            }
+        }
+    }
+
 }
