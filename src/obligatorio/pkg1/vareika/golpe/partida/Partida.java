@@ -101,7 +101,7 @@ public class Partida {
         return nuevoTablero;
     }
 
-    public boolean realizarMovimiento(int f, int c) {
+    public String realizarMovimiento(int f, int c) {
         //input para posicion [0][0] = (1, 1)
         boolean retrocedido = false;
         if (f == -1 && c == -1) {
@@ -111,7 +111,7 @@ public class Partida {
             this.tablero.realizarMov(f - 1, c - 1);
             this.movimientos.add(new int[]{f, c});
         }
-        return retrocedido;
+        return retrocedido ? "retrocedido" : "movimiento realizado";
     }
 
     private void retroceder() {

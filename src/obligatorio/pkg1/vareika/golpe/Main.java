@@ -15,18 +15,18 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Desea jugar?");
-        boolean jugarFlag = recibirRespuesta();
-        while (jugarFlag) {
+        while (recibirRespuesta()) {
             Partida partida = iniciarJuego();
             PrettyPrinter.printUnTablero(partida.getTablero());
 
             boolean continuarJugando = true;
             while (continuarJugando) {
-                continuarJugando = realizarMovimiento(partida);
+                System.out.println("Ingrese fila de movimiento o X/H/S:");
+                String movimiento = in.nextLine();
+                continuarJugando = realizarMovimiento(partida, movimiento);
             }
 
             System.out.println("Desea volver a jugar?");
-            jugarFlag = recibirRespuesta();
         }
 
         System.out.println("Hasta luego!");
@@ -44,19 +44,25 @@ public class Main {
 
     public static Partida iniciarJuego() {
         System.out.println("Seleccione una opcion de juego");
+        Partida partida = null;
         String modo = in.nextLine();
-        while (!modo.equalsIgnoreCase("a")
-                && !modo.equalsIgnoreCase("b")
-                && !modo.equalsIgnoreCase("c")) {
-            System.out.println("Ingresar respuesta valida (a/b/c):");
-            modo = in.nextLine();
+        boolean flag = true;
+        while (flag) {
+            switch (modo.toLowerCase()) {
+                case "a", "b":
+                    partida = new Partida(modo);
+                    flag = false;
+                    break;
+                case "c":
+                    partida = new Partida(modo);
+                    flag = false;
+                    configPartida(partida);
+                    break;
+                default:
+                    System.out.println("Ingresar respuesta valida (a/b/c):");
+                    modo = in.nextLine();
+            }
         }
-        Partida partida = new Partida(modo);
-
-        if (modo.equals("c")){
-            configPartida(partida);
-        }
-
         return partida;
     }
 
@@ -83,8 +89,7 @@ public class Main {
                     partida.casoC(m, n, dif);
                     flag = false;
                 } else {
-                    System.out.println(
-                            "Los datos deben de pertenecer a los rangos correctos, ingrese nuevamente:");
+                    System.out.println("Los datos deben de pertenecer a los rangos correctos, ingrese nuevamente:");
                 }
             } catch (Exception e) {
                 in.nextLine();
@@ -93,11 +98,8 @@ public class Main {
         }
     }
 
-    //TODO fijarse q en s no se vaya para atras sin movimientos
-    public static boolean realizarMovimiento(Partida partida) {
+    public static boolean realizarMovimiento(Partida partida, String movimiento) {
         boolean continuarJugando = true;
-        System.out.println("Ingrese fila de movimiento o X/H/S:");
-        String movimiento = in.nextLine();
 
         boolean respuestaValida = false;
         while (!respuestaValida) {
@@ -121,11 +123,10 @@ public class Main {
                     try {
                         int fila = Integer.parseInt(movimiento);
                         System.out.println("Columna:");
-                        String columnaStr = in.nextLine();
-                        int columna = Integer.parseInt(columnaStr);
+                        int columna = Integer.parseInt(in.nextLine());
 
                         Tablero tableroPrevio = partida.getTablero();
-                        if (partida.realizarMovimiento(fila, columna)) {
+                        if (partida.realizarMovimiento(fila, columna).equals("retrocedido")) {
                             PrettyPrinter.printUnTablero(partida.getTablero());
                         } else {
                             PrettyPrinter.printDosTableros(
