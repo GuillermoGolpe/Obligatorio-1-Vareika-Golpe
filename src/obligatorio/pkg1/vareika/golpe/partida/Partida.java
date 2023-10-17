@@ -22,10 +22,10 @@ public class Partida {
 
         switch (modo.toLowerCase()) {
             case "a":
-                this.tablero = cargarDeTxt("datos.txt");
+                this.tablero = cargarDeTxt("src/Test/datos.txt");
                 break;
             case "b":
-                this.tablero = cargarDeTxt("predefinido.txt");
+                this.tablero = cargarDeTxt("src/Test/predefinido.txt");
                 break;
         }
     }
@@ -95,7 +95,6 @@ public class Partida {
     }
 
     private Tablero aplicarMovimiento(Tablero tablero, int f, int c) {
-        // Usamos deep copy para poder tener registro de todos los tableros anteriores y el actual
         Tablero nuevoTablero = (Tablero) tablero.clone();
         nuevoTablero.realizarMov(f, c);
         return nuevoTablero;

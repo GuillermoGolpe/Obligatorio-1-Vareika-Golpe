@@ -10,12 +10,15 @@ import obligatorio.pkg1.vareika.golpe.partida.Tablero;
  *
  * @author GuillermoGolpe FedericoVareika
  */
+
+//TODO agregar registro de tiempo para printear al final
 public class Main {
     static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
         System.out.println("Desea jugar?");
         while (recibirRespuesta()) {
+            long startTime = System.currentTimeMillis();
             Partida partida = iniciarJuego();
             PrettyPrinter.printUnTablero(partida.getTablero());
 
@@ -26,6 +29,8 @@ public class Main {
                 continuarJugando = realizarMovimiento(partida, movimiento);
             }
 
+            long endTime = System.currentTimeMillis();
+            System.out.printf("Tiempo insumido en partida: %s segundos %n", (endTime - startTime) / 1000);
             System.out.println("Desea volver a jugar?");
         }
 
