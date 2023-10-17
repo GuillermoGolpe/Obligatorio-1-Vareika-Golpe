@@ -5,37 +5,29 @@
 package obligatorio.pkg1.vareika.golpe.partida;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  *
  * @author GuillermoGolpe FedericoVareika
  */
 public class Partida {
-    private ArrayList<Tablero> tableros;
+    private Tablero tablero;
     private ArrayList<int[]> solucion;
     private ArrayList<int[]> movimientos;
     
     public Partida(String modo) {
-        this.setTableros(new ArrayList<>());
-        this.setSolucion(new ArrayList<>());
-        this.setMovimientos(new ArrayList<>());
+        this.solucion = new ArrayList<>();
+        this.movimientos = new ArrayList<>();
 
-        switch (modo) {
-            case "A":
-                casoA();
+        switch (modo.toLowerCase()) {
+            case "a":
+                this.tablero = cargarDeTxt("src/Test/datos.txt");
                 break;
-            case "B":
-                casoB();
+            case "b":
+                this.tablero = cargarDeTxt("src/Test/predefinido.txt");
                 break;
         }
-    }
-    
-    public void setTableros(ArrayList<Tablero> tableros) {
-        this.tableros = tableros;
     }
 
     private Tablero cargarDeTxt(String txt) { 
@@ -44,7 +36,7 @@ public class Partida {
 
         try {
             txtScanner = new Scanner(file);
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -73,58 +65,79 @@ public class Partida {
 
         return tablero; 
     }
-    
-    // Cargar tablero de datos.txt
-    private void casoA() {
-        this.tableros.add(cargarDeTxt("datos.txt"));
-    }
-    
-    // Cargar tablero predefinido
-    private void casoB() {
-        this.tableros.add(cargarDeTxt("predefinido.txt"));
-    }
-    
+
     // Generar nuevo tablero valido
     public void casoC(int n, int m, int dif) {
         Random random = new Random();
 
-        Tablero tableroInicial = new Tablero(n, m);
-        Tablero tableroAux = new Tablero(n, m);
-        tableroInicial.randomizarTablero();
-        this.tableros.add(tableroInicial);
+        this.tablero = new Tablero(n, m);
+        Tablero tableroAux;
+        this.tablero.randomizarTablero();
         int i = 0;
-        while(i <= dif) {
+        while(i < dif) {
             int f = random.nextInt(n);
             int c = random.nextInt(m);
-            tableroAux = aplicarMovimiento(f, c);
+            tableroAux = aplicarMovimientoAlTablero(this.tablero, f, c);
             if (!tableroAux.resuelto()) {
-                tableroInicial = tableroAux;
-                this.solucion.add(new int[] {f, c});
+                this.tablero = tableroAux;
+                this.solucion.add(new int[] {f+1, c+1});
                 i++;
             }
         }
     }
 
-    public ArrayList<Tablero> getTableros() {
-        return tableros;
-    }
-
-    public void setSolucion(ArrayList<int[]> solucion) {
-        this.solucion = solucion;
-    }
-
     public ArrayList<int[]> getMovimientos() {
-        return movimientos;
+        return this.movimientos;
     }
 
-    public void setMovimientos(ArrayList<int[]> movimientos) {
-        this.movimientos = movimientos;
+    public Tablero getTablero() {
+        return (Tablero) this.tablero.clone();
     }
-    
-    public Tablero aplicarMovimiento(int f, int c) {
-        Tablero nuevoTablero = this.tableros.get(this.tableros.size() - 1);
+
+    private Tablero aplicarMovimientoAlTablero(Tablero tablero, int f, int c) {
+        Tablero nuevoTablero = (Tablero) tablero.clone();
         nuevoTablero.realizarMov(f, c);
         return nuevoTablero;
     }
 
+    public String realizarMovimiento(int f, int c) {
+        //input para posicion [0][0] = (1, 1)
+        boolean retrocedido = false;
+        if (f == -1 && c == -1) {
+            retroceder();
+            retrocedido = true;
+        } else {
+            this.tablero.realizarMov(f - 1, c - 1);
+            this.movimientos.add(new int[]{f, c});
+        }
+        return retrocedido ? "retrocedido" : "movimiento realizado";
+    }
+
+    private void retroceder() {
+        int movSize = this.movimientos.size();
+        int[] movimiento = this.movimientos.get(movSize-1);
+        this.movimientos.remove(movSize-1);
+        this.tablero.realizarMov(movimiento[0] - 1, movimiento[1] - 1);
+    }
+
+    public ArrayList<int[]> generarSolucion() {
+        ArrayList<int[]> solucionGenerada = new ArrayList<>();
+        solucionGenerada.addAll(this.solucion);
+        solucionGenerada.addAll(this.movimientos);
+        quitarPares(solucionGenerada);
+        return solucionGenerada;
+    }
+
+    private void quitarPares(ArrayList<int[]> lista) {
+        for (int i = 0; i < lista.size(); i++) {
+            for (int j = i + 1; j < lista.size(); j++) {
+                if (Arrays.equals(lista.get(i), lista.get(j))) {
+                    lista.remove(lista.get(i));
+                    lista.remove(lista.get(j - 1));
+                    j = lista.size();
+                    i--;
+                }
+            }
+        }
+    }
 }

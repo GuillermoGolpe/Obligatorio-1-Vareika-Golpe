@@ -3,12 +3,17 @@ package obligatorio.pkg1.vareika.golpe;
 import obligatorio.pkg1.vareika.golpe.partida.Tablero;
 import obligatorio.pkg1.vareika.golpe.partida.Celda;
 
+import java.util.ArrayList;
+
+/**
+ *
+ * @author GuillermoGolpe FedericoVareika
+ */
 public class PrettyPrinter {
     private static final char BORDER_KNOT = '+';
     private static final char HORIZONTAL_BORDER = '-';
     private static final char VERTICAL_BORDER = '|';
     private static final String HORIZONTAL_PADDING = " ";
-    private static final int VERTICAL_PADDING = 1;
     private static final String ROJO = "\u001B[31m";
     private static final String AZUL = "\u001B[34m";
     private static final String RESET = "\u001B[0m";
@@ -28,7 +33,7 @@ public class PrettyPrinter {
     public static void printDosTableros(Tablero tablero1, Tablero tablero2) {
         final Celda[][] celdas1 = tablero1.getCeldas();
         final Celda[][] celdas2 = tablero2.getCeldas();
-        String columnas = getFilasNumero(celdas1[0].length) + "      " + getFilasNumero(celdas2[0].length);
+        String columnas = getFilasNumero(celdas1[0].length) + "       " + getFilasNumero(celdas2[0].length);
         System.out.println(columnas);
         String horizontalBorder = getHorizontalBorder(celdas1[0].length);
         System.out.printf("   %s  ==>    %s%n",
@@ -86,4 +91,18 @@ public class PrettyPrinter {
         }
         return builder.toString();
     }
+
+    public static void printMovimientos(ArrayList<int[]> movimientos) {
+        StringBuilder builder = new StringBuilder(256);
+        for (int[] mov : movimientos) {
+            builder.append(getMovimiento(mov) + ", ");
+        }
+        builder.delete(builder.length() - 2, builder.length() - 1);
+        System.out.println(builder.toString());
+    }
+
+    private static String getMovimiento(int[] mov) {
+        return "(" + mov[0] + "," + mov[1] + ")";
+    }
+
 }
