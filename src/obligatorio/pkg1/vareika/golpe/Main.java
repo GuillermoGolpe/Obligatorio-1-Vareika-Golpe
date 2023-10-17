@@ -11,7 +11,7 @@ import obligatorio.pkg1.vareika.golpe.partida.Tablero;
  * @author GuillermoGolpe FedericoVareika
  */
 
-//TODO agregar registro de tiempo para printear al final
+// TODO preguntar si las filas y columnas se ingresan por separado
 public class Main {
     static Scanner in = new Scanner(System.in);
 
@@ -24,7 +24,7 @@ public class Main {
 
             boolean continuarJugando = true;
             while (continuarJugando) {
-                System.out.println("Ingrese fila de movimiento o X/H/S:");
+                System.out.println("Ingrese movimiento o X/H/S:");
                 String movimiento = in.nextLine();
                 continuarJugando = realizarMovimiento(partida, movimiento);
             }
@@ -126,9 +126,10 @@ public class Main {
                     break;
                 default:
                     try {
-                        int fila = Integer.parseInt(movimiento);
-                        System.out.println("Columna:");
-                        int columna = Integer.parseInt(in.nextLine());
+                        // separa en los casos: [f,c] [f c]
+                        String[] filaColumna = movimiento.split("[ ,]");
+                        int fila = Integer.parseInt(filaColumna[0]);
+                        int columna = Integer.parseInt(filaColumna[1]);
 
                         Tablero tableroPrevio = partida.getTablero();
                         if (partida.realizarMovimiento(fila, columna).equals("retrocedido")) {
