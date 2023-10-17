@@ -49,7 +49,7 @@ public class Tablero implements Cloneable {
         }
         return flag;
     }
-    public void realizarMov(int f, int c){
+    public void realizarMov(int f, int c) {
         Celda celda = this.celdas[f][c];
         switch (celda.getSimbolo()) {
             case '/':
@@ -62,21 +62,21 @@ public class Tablero implements Cloneable {
                 }
                 break;
             case '\\':
-                for (int i = 0; i<this.celdas.length;i++){
+                for (int i = 0; i<this.celdas.length;i++) {
                     for (int j = 0; j < this.celdas[0].length; j++) {
-                        if(i-j == f-c){
+                        if (i-j == f-c) {
                             this.celdas[i][j].invertirColor();
                         }
                     }
                 }
                 break;
             case '-':
-                for (int i = 0; i< this.celdas[0].length; i++){
+                for (int i = 0; i< this.celdas[0].length; i++) {
                     this.celdas[f][i].invertirColor();
                 }
                 break;
             case '|':
-                for (int i = 0; i< this.celdas.length; i++){
+                for (int i = 0; i< this.celdas.length; i++) {
                     this.celdas[i][c].invertirColor();
                 }   
                 break;

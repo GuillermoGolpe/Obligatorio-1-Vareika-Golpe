@@ -77,7 +77,7 @@ public class Partida {
         while(i < dif) {
             int f = random.nextInt(n);
             int c = random.nextInt(m);
-            tableroAux = aplicarMovimiento(this.tablero, f, c);
+            tableroAux = aplicarMovimientoAlTablero(this.tablero, f, c);
             if (!tableroAux.resuelto()) {
                 this.tablero = tableroAux;
                 this.solucion.add(new int[] {f+1, c+1});
@@ -94,7 +94,7 @@ public class Partida {
         return (Tablero) this.tablero.clone();
     }
 
-    private Tablero aplicarMovimiento(Tablero tablero, int f, int c) {
+    private Tablero aplicarMovimientoAlTablero(Tablero tablero, int f, int c) {
         Tablero nuevoTablero = (Tablero) tablero.clone();
         nuevoTablero.realizarMov(f, c);
         return nuevoTablero;
