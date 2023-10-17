@@ -52,52 +52,46 @@ public class Tablero implements Cloneable {
     public void realizarMov(int f, int c) {
         Celda celda = this.celdas[f][c];
         switch (celda.getSimbolo()) {
-            case '/':
-                for (int i = 0; i<this.celdas.length;i++){
+            case '/' -> {
+                for (int i = 0; i < this.celdas.length; i++) {
                     for (int j = 0; j < this.celdas[0].length; j++) {
-                        if(i+j == f+c){
+                        if (i + j == f + c) {
                             this.celdas[i][j].invertirColor();
                         }
                     }
                 }
-                break;
-            case '\\':
-                for (int i = 0; i<this.celdas.length;i++) {
+            }
+            case '\\' -> {
+                for (int i = 0; i < this.celdas.length; i++) {
                     for (int j = 0; j < this.celdas[0].length; j++) {
-                        if (i-j == f-c) {
+                        if (i - j == f - c) {
                             this.celdas[i][j].invertirColor();
                         }
                     }
                 }
-                break;
-            case '-':
-                for (int i = 0; i< this.celdas[0].length; i++) {
+            }
+            case '-' -> {
+                for (int i = 0; i < this.celdas[0].length; i++) {
                     this.celdas[f][i].invertirColor();
                 }
-                break;
-            case '|':
-                for (int i = 0; i< this.celdas.length; i++) {
+            }
+            case '|' -> {
+                for (int i = 0; i < this.celdas.length; i++) {
                     this.celdas[i][c].invertirColor();
-                }   
-                break;
-            default:
-                break;
+                }
+            }
         }
         
     }
 
     public void randomizarTablero() {
         Random random = new Random();
-        char color = '0';
         int colorNum = random.nextInt(2);
-        switch (colorNum) {
-            case 0:
-               color = 'R';
-               break;
-            case 1:
-                color = 'A';
-                break;
-        }
+        char color = switch (colorNum) {
+            case 0 -> 'R';
+            case 1 -> 'A';
+            default -> '0';
+        };
         for (int i = 0; i < celdas.length; i++) {
             for (int j = 0; j < celdas[0].length; j++) {
                 celdas[i][j] = new Celda(random.nextInt(4), color);

@@ -20,14 +20,11 @@ public class Partida {
         this.solucion = new ArrayList<>();
         this.movimientos = new ArrayList<>();
 
-        switch (modo.toLowerCase()) {
-            case "a":
-                this.tablero = cargarDeTxt("src/Test/datos.txt");
-                break;
-            case "b":
-                this.tablero = cargarDeTxt("src/Test/predefinido.txt");
-                break;
-        }
+        this.tablero = switch (modo.toLowerCase()) {
+            case "a" -> cargarDeTxt("datos.txt");
+            case "b" -> cargarDeTxt("predefinido.txt");
+            default -> null;
+        };
     }
 
     private Tablero cargarDeTxt(String txt) { 

@@ -21,20 +21,13 @@ public class Celda implements Cloneable {
     }
 
     public Celda(int simboloNum, char color) {
-        switch (simboloNum) {
-            case 0:
-                this.simbolo = '-';
-                break;
-            case 1:
-                this.simbolo = '|';
-                break;
-            case 2:
-                this.simbolo = '/';
-                break;
-            case 3:
-                this.simbolo = '\\';
-                break;
-        }
+        this.simbolo = switch (simboloNum) {
+            case 0 -> '-';
+            case 1 -> '|';
+            case 2 -> '/';
+            case 3 -> '\\';
+            default -> '0'; // default no usado
+        };
         this.color = color;
     }
 
@@ -56,7 +49,7 @@ public class Celda implements Cloneable {
     }
 
     public void invertirColor(){
-        if (this.getColor()== 'A'){
+        if (this.getColor() == 'A'){
             this.setColor('R');
         } else{
             this.setColor('A');

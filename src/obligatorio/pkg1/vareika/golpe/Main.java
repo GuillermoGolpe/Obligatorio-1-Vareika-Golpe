@@ -54,18 +54,19 @@ public class Main {
         boolean flag = true;
         while (flag) {
             switch (modo.toLowerCase()) {
-                case "a", "b":
+                case "a", "b" -> {
                     partida = new Partida(modo);
                     flag = false;
-                    break;
-                case "c":
+                }
+                case "c" -> {
                     partida = new Partida(modo);
                     flag = false;
                     configPartida(partida);
-                    break;
-                default:
+                }
+                default -> {
                     System.out.println("Ingresar respuesta valida (a/b/c):");
                     modo = in.nextLine();
+                }
             }
         }
         return partida;
@@ -110,21 +111,19 @@ public class Main {
         while (!respuestaValida) {
             respuestaValida = true;
             switch (movimiento.toLowerCase()) {
-                case "s":
-                    PrettyPrinter.printMovimientos(partida.generarSolucion());
-                    break;
-                case "h":
+                case "s" -> PrettyPrinter.printMovimientos(partida.generarSolucion());
+                case "h" -> {
                     try {
                         PrettyPrinter.printMovimientos(partida.getMovimientos());
                     } catch (Exception e) {
                         System.out.println("No has realizado ningun movimiento.");
                     }
-                    break;
-                case "x":
+                }
+                case "x" -> {
                     continuarJugando = false;
                     System.out.println("Haz finalizado el juego.");
-                    break;
-                default:
+                }
+                default -> {
                     try {
                         // separa en los casos: [f,c] [f c]
                         String[] filaColumna = movimiento.split("[ ,]");
@@ -144,6 +143,7 @@ public class Main {
                         System.out.println("Ingresar movimiento valido:");
                         movimiento = in.nextLine();
                     }
+                }
             }
         }
 

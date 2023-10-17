@@ -78,14 +78,11 @@ public class PrettyPrinter {
         StringBuilder builder = new StringBuilder(256);
         builder.append(" " + n + " " + VERTICAL_BORDER);
         for (Celda celda : fila) {
-            switch (celda.getColor()) {
-                case 'A':
-                    builder.append(AZUL);
-                    break;
-                case 'R':
-                    builder.append(ROJO);
-                    break;
-            }
+            builder.append(switch (celda.getColor()) {
+                case 'A' -> AZUL;
+                case 'R' -> ROJO;
+                default -> RESET;
+            });
             builder.append(HORIZONTAL_PADDING);
             builder.append(celda.getSimbolo() + HORIZONTAL_PADDING + RESET + VERTICAL_BORDER);
         }
